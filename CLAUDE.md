@@ -4,132 +4,158 @@ This document provides guidance for AI assistants working on the claudepress rep
 
 ## Project Overview
 
-**claudepress** is a project in its initial setup phase. The repository has been initialized but does not yet contain application code, build configuration, or development tooling.
+**claudepress** contains the Claude SSG framework - a static site generator designed to be operated by AI assistants. It uses a component-based architecture with themes, site-types, and per-site customization.
 
 ### Current State
 
-- **Status**: Fresh repository - awaiting initial project setup
-- **Content**: Placeholder readme.md only
-- **Dependencies**: None configured
-- **Build System**: Not yet established
+- **Status**: Framework initialized
+- **Content**: Complete Claude SSG framework structure
+- **Dependencies**: None (documentation-driven framework)
+- **Build System**: AI-operated via command documentation
 
 ## Repository Structure
 
 ```
 claudepress/
-├── CLAUDE.md          # This file - AI assistant guidance
-├── readme.md          # Project readme (placeholder)
-└── .git/              # Git repository configuration
+├── CLAUDE.md                    # This file - AI assistant guidance
+├── readme.md                    # Project readme
+└── claude-ssg/                  # Main framework directory
+    ├── core/                    # Framework internals
+    │   ├── CLAUDE.md            # Framework-specific AI guide
+    │   ├── rules/               # Core engine rules
+    │   │   └── ssg-engine.md
+    │   ├── engine/              # Engine documentation
+    │   │   ├── parser.md
+    │   │   ├── assembler.md
+    │   │   ├── variables.md
+    │   │   ├── file-structure.md
+    │   │   └── validation-rules.md
+    │   └── commands/            # Command definitions (18 commands)
+    │       ├── init-project.md
+    │       ├── init-site.md
+    │       ├── build.md
+    │       └── ... (15 more)
+    ├── themes/                  # Theme definitions
+    │   └── _template/           # Base theme template
+    │       ├── theme.json
+    │       ├── design-system.md
+    │       ├── components/      # 18 HTML components
+    │       └── assets/          # CSS, JS, fonts, images
+    ├── site-types/              # Site type presets
+    │   └── _template/           # Base site-type template
+    │       ├── preset.json
+    │       ├── ux-system.md
+    │       ├── structure.md
+    │       ├── components/
+    │       └── content-templates/
+    ├── sites/                   # Individual site projects
+    │   └── _template/           # Base site template
+    │       ├── site.json
+    │       ├── content/
+    │       ├── overrides/
+    │       ├── public/
+    │       └── _state/
+    └── README.md                # Framework documentation
 ```
-
-As the project develops, this section should be updated to reflect the actual codebase structure.
 
 ## Development Guidelines
 
 ### Git Workflow
 
-1. **Branch Naming**: Feature branches should follow the pattern `claude/<feature-name>-<session-id>`
-2. **Commits**: Write clear, descriptive commit messages that explain the "why" behind changes
-3. **Main Branch**: Protected - all changes should go through feature branches
+1. **Branch Naming**: Feature branches follow `claude/<feature-name>-<session-id>`
+2. **Commits**: Write clear, descriptive commit messages
+3. **Main Branch**: Protected - all changes through feature branches
 4. **Push Commands**: Always use `git push -u origin <branch-name>`
 
-### Code Conventions
+### Framework Conventions
 
-_To be established once the tech stack is chosen. Update this section with:_
+- **Documentation Files**: Use `.md` for rules, guides, and configuration
+- **Data Files**: Use `.json` for structured configuration
+- **Component Files**: Use `.html` for component templates
+- **Placeholders**: Use `.gitkeep` for empty directories
+- **Templates**: Directories named `_template/` are base templates, not actual content
 
-- Language-specific style guides
-- Linting and formatting rules
-- Naming conventions
-- File organization patterns
+### Component Cascade
 
-### Testing Requirements
+When resolving components, the framework uses this priority:
+1. `sites/{site}/overrides/components/` (highest priority)
+2. `site-types/{type}/components/`
+3. `themes/{theme}/components/` (lowest priority)
 
-_To be established. Update this section with:_
+### Variable Syntax
 
-- Test framework and runner
-- Coverage requirements
-- Test file naming and location conventions
-- Instructions for running tests
-
-### Build & Development
-
-_To be established. Update this section with:_
-
-- Development environment setup
-- Build commands
-- Local development server instructions
-- Environment variables and configuration
+Variables use `{{namespace.path}}` format:
+- `{{site.name}}` - Site configuration
+- `{{theme.color.primary}}` - Design tokens
+- `{{content.title}}` - Page frontmatter
+- `{{slot}}` - Component slot content
 
 ## For AI Assistants
+
+### Executing Commands
+
+All commands are defined in `claude-ssg/core/commands/`. To execute:
+1. Read the command file
+2. Follow the steps exactly as documented
+3. Validate output against expected results
+4. Handle errors according to documented behavior
 
 ### Before Making Changes
 
 1. **Read First**: Always read files before modifying them
-2. **Understand Context**: Explore related code to understand existing patterns
-3. **Check Dependencies**: Verify any new dependencies are necessary and appropriate
-4. **Maintain Consistency**: Follow existing code patterns and conventions
+2. **Understand Context**: Explore related files to understand patterns
+3. **Check Cascade**: Understand where components/styles come from
+4. **Validate**: Run validation before and after changes
 
-### When Writing Code
+### Key Rules
 
-1. **Keep It Simple**: Avoid over-engineering; only add what's needed for the current task
-2. **Security**: Never introduce vulnerabilities (injection, XSS, etc.)
-3. **No Guessing**: Don't make assumptions about file contents or API behavior
-4. **Document Changes**: Update relevant documentation when making significant changes
-
-### When Committing
-
-1. Use descriptive commit messages that explain the purpose of changes
-2. Stage specific files rather than using `git add -A` or `git add .`
-3. Never commit sensitive files (.env, credentials, etc.)
-4. Include the Claude session link at the end of commit messages
+1. **Never modify `core/`** without explicit request
+2. **Respect the cascade** - site overrides type overrides theme
+3. **Use templates** - copy from `_template/` directories for new items
+4. **Document changes** - update relevant `.md` files
+5. **Validate everything** - use the `validate` command
 
 ### File Operations
 
 - Prefer editing existing files over creating new ones
-- Don't create documentation files unless explicitly requested
-- Use appropriate tools for file operations (Read, Edit, Write) instead of shell commands
-
-## Project-Specific Notes
-
-_Add project-specific guidance here as the codebase develops:_
-
-- Key architectural decisions and their rationale
-- Important modules and their responsibilities
-- Common pitfalls or gotchas
-- Integration points and external dependencies
-- Performance considerations
+- Copy from `_template/` when creating new themes/sites/types
+- Maintain `.gitkeep` files in empty directories
+- Never output component `.html` files directly to public
 
 ## Quick Reference
 
 ### Common Commands
 
-```bash
-# To be populated when build system is configured
-# Example commands:
-# npm install        - Install dependencies
-# npm run dev        - Start development server
-# npm test           - Run tests
-# npm run build      - Production build
-```
+| Command | Purpose |
+|---------|---------|
+| `init-site <name>` | Create a new site |
+| `build <site>` | Generate static output |
+| `new-page <site> <path>` | Create content page |
+| `new-theme <name>` | Create new theme |
+| `new-site-type <name>` | Create site type |
+| `validate <target>` | Validate configuration |
+| `status [site]` | Show current status |
+| `preview <site>` | Local preview server |
 
 ### Important Files
 
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | AI assistant guidance (this file) |
-| `readme.md` | Project documentation |
-| _More to be added_ | _As project develops_ |
+| `claude-ssg/core/CLAUDE.md` | Framework-specific AI guide |
+| `claude-ssg/README.md` | Framework documentation |
+| `claude-ssg/core/rules/ssg-engine.md` | Core engine rules |
+| `claude-ssg/core/engine/validation-rules.md` | Validation rules |
 
-### Key Contacts / Resources
+### Key Resources
 
-_To be added:_
-- Project documentation links
-- API documentation
-- Design system / UI guidelines
-- Deployment documentation
+- Framework docs: `claude-ssg/README.md`
+- Engine rules: `claude-ssg/core/rules/ssg-engine.md`
+- All commands: `claude-ssg/core/commands/`
+- Validation: `claude-ssg/core/engine/validation-rules.md`
 
 ---
 
 **Last Updated**: 2026-01-27
 **Repository**: claudepress
-**Status**: Initial Setup Phase
+**Status**: Claude SSG Framework Initialized

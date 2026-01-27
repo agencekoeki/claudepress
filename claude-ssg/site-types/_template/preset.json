@@ -1,0 +1,8 @@
+{
+  "name": "_template",
+  "description": "Base site type template - copy this to create a new site type",
+  "requiredComponents": [],
+  "defaultPages": ["index"],
+  "features": [],
+  "created": ""
+}

@@ -1,0 +1,11 @@
+<article class="article">
+  <header class="article__header">
+    <h1 class="article__title">{{title}}</h1>
+    {{#if date}}
+    <time class="article__date" datetime="{{date}}">{{date}}</time>
+    {{/if}}
+  </header>
+  <div class="article__content">
+    {{slot}}
+  </div>
+</article>

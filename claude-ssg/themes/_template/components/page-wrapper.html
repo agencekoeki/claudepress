@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{site.language|default:"en"}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{content.title}} - {{site.name}}</title>
+  <meta name="description" content="{{content.description|default:site.description}}">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="page">
+  {{slot}}
+  <script src="/js/main.js"></script>
+</body>
+</html>

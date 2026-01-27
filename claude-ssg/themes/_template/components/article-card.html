@@ -1,0 +1,11 @@
+<a href="{{href}}" class="article-card">
+  <article>
+    <h3 class="article-card__title">{{title}}</h3>
+    {{#if excerpt}}
+    <p class="article-card__excerpt">{{excerpt}}</p>
+    {{/if}}
+    {{#if date}}
+    <time class="article-card__date" datetime="{{date}}">{{date}}</time>
+    {{/if}}
+  </article>
+</a>

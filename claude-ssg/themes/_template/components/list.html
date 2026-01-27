@@ -1,0 +1,9 @@
+{{#if ordered}}
+<ol class="list list--ordered">
+  {{slot}}
+</ol>
+{{else}}
+<ul class="list list--unordered">
+  {{slot}}
+</ul>
+{{/if}}
