@@ -1,0 +1,14 @@
+<!--
+    Composant: nav-item
+    Description: Élément de navigation individuel
+
+    Paramètres:
+    - {{label}}: Texte du lien
+    - {{href}}: URL de destination
+    - {{active}}: true si page courante (optionnel)
+-->
+<li class="nav-item{{#if active}} nav-item--active{{/if}}">
+    <a href="{{href}}" class="nav-link"{{#if active}} aria-current="page"{{/if}}>
+        {{label}}
+    </a>
+</li>

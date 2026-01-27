@@ -1,0 +1,30 @@
+<!--
+    Composant: article-card
+    Description: Carte d'aperçu d'article pour les listes
+
+    Paramètres:
+    - {{title}}: Titre de l'article
+    - {{excerpt}}: Extrait/résumé
+    - {{href}}: Lien vers l'article complet
+    - {{date}}: Date de publication (optionnel)
+    - {{image}}: Image de couverture (optionnel)
+-->
+<article class="article-card">
+    {{#if image}}
+    <div class="article-card-image">
+        <img src="{{image}}" alt="" loading="lazy">
+    </div>
+    {{/if}}
+    <div class="article-card-content">
+        <h2 class="article-card-title">
+            <a href="{{href}}">{{title}}</a>
+        </h2>
+        {{#if date}}
+        <time class="article-card-date" datetime="{{date}}">{{date}}</time>
+        {{/if}}
+        {{#if excerpt}}
+        <p class="article-card-excerpt">{{excerpt}}</p>
+        {{/if}}
+        <a href="{{href}}" class="article-card-link">Lire la suite</a>
+    </div>
+</article>

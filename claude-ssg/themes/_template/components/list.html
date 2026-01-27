@@ -1,0 +1,17 @@
+<!--
+    Composant: list
+    Description: Liste ordonnée ou non ordonnée
+
+    Paramètres:
+    - {{type}}: Type de liste: ul, ol (défaut: ul)
+    - {{items}}: Contenu des éléments (slot)
+-->
+{{#if type == "ol"}}
+<ol class="list list--ordered">
+    {{slot:items}}
+</ol>
+{{else}}
+<ul class="list list--unordered">
+    {{slot:items}}
+</ul>
+{{/if}}

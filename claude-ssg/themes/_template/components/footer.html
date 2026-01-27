@@ -1,0 +1,26 @@
+<!--
+    Composant: footer
+    Description: Pied de page du site
+
+    Variables:
+    - {{site.name}}: Nom du site
+    - {{build.year}}: Année courante
+-->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <p class="copyright">
+                &copy; {{build.year}} {{site.name}}. Tous droits réservés.
+            </p>
+        </div>
+        {{#if site.social}}
+        <div class="footer-social">
+            {{#each site.social}}
+            <a href="{{this.url}}" class="social-link" aria-label="{{this.name}}">
+                {{this.name}}
+            </a>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</footer>

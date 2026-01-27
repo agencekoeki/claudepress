@@ -1,0 +1,28 @@
+<!--
+    Composant: article
+    Description: Conteneur d'article complet
+
+    Variables:
+    - {{article.title}}: Titre de l'article
+    - {{article.date}}: Date de publication
+    - {{article.author}}: Auteur (optionnel)
+    - {{article.content}}: Contenu de l'article
+-->
+<article class="article">
+    <header class="article-header">
+        <h1 class="article-title">{{article.title}}</h1>
+        <div class="article-meta">
+            {{#if article.date}}
+            <time class="article-date" datetime="{{article.date}}">
+                {{article.date}}
+            </time>
+            {{/if}}
+            {{#if article.author}}
+            <span class="article-author">par {{article.author}}</span>
+            {{/if}}
+        </div>
+    </header>
+    <div class="article-content">
+        {{article.content}}
+    </div>
+</article>

@@ -1,0 +1,15 @@
+<!--
+    Composant: heading
+    Description: Titres de niveau 1 à 6
+
+    Paramètres:
+    - {{level}}: Niveau du titre (1-6)
+    - {{text}}: Texte du titre
+    - {{id}}: Identifiant pour ancre (optionnel, auto-généré sinon)
+-->
+<h{{level}} class="heading heading--{{level}}"{{#if id}} id="{{id}}"{{/if}}>
+    {{text}}
+    {{#if id}}
+    <a href="#{{id}}" class="heading-anchor" aria-hidden="true">#</a>
+    {{/if}}
+</h{{level}}>

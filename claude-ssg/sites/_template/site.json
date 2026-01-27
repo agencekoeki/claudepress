@@ -1,0 +1,33 @@
+{
+    "name": "_template",
+    "theme": "_template",
+    "type": "_template",
+    "url": "https://example.com",
+    "language": "fr",
+    "author": {
+        "name": "Votre Nom",
+        "email": "contact@example.com"
+    },
+    "navigation": {
+        "items": [
+            {
+                "label": "Accueil",
+                "href": "/"
+            },
+            {
+                "label": "À propos",
+                "href": "/about"
+            },
+            {
+                "label": "Contact",
+                "href": "/contact"
+            }
+        ]
+    },
+    "social": [],
+    "meta": {
+        "title": "Mon Site",
+        "description": "Description de mon site",
+        "keywords": []
+    }
+}

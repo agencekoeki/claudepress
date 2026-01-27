@@ -1,0 +1,14 @@
+<!--
+    Composant: nav
+    Description: Menu de navigation principal
+
+    Variables:
+    - {{navigation.items}}: Liste des éléments de navigation
+-->
+<nav class="site-nav" aria-label="Navigation principale">
+    <ul class="nav-list">
+        {{#each navigation.items}}
+        {{include:nav-item label="{{this.label}}" href="{{this.href}}" active="{{this.active}}"}}
+        {{/each}}
+    </ul>
+</nav>

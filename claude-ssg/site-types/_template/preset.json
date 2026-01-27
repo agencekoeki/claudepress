@@ -1,0 +1,27 @@
+{
+    "name": "_template",
+    "description": "Template de base pour créer un nouveau type de site",
+    "version": "1.0.0",
+    "default_theme": null,
+    "features": {
+        "blog": false,
+        "portfolio": false,
+        "documentation": false,
+        "ecommerce": false
+    },
+    "navigation": {
+        "style": "horizontal",
+        "position": "top",
+        "sticky": false
+    },
+    "content": {
+        "showDates": true,
+        "showAuthor": false,
+        "showReadingTime": false,
+        "excerptLength": 150
+    },
+    "seo": {
+        "generateSitemap": true,
+        "generateRobots": true
+    }
+}

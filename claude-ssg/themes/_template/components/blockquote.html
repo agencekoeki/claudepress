@@ -1,0 +1,17 @@
+<!--
+    Composant: blockquote
+    Description: Citation avec source optionnelle
+
+    Paramètres:
+    - {{content}}: Texte de la citation
+    - {{cite}}: Source/auteur (optionnel)
+    - {{citeUrl}}: URL de la source (optionnel)
+-->
+<blockquote class="blockquote">
+    <p class="blockquote-content">{{content}}</p>
+    {{#if cite}}
+    <footer class="blockquote-footer">
+        — {{#if citeUrl}}<cite><a href="{{citeUrl}}">{{cite}}</a></cite>{{else}}<cite>{{cite}}</cite>{{/if}}
+    </footer>
+    {{/if}}
+</blockquote>

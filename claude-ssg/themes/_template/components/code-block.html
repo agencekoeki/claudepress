@@ -1,0 +1,21 @@
+<!--
+    Composant: code-block
+    Description: Bloc de code avec coloration syntaxique
+
+    Paramètres:
+    - {{code}}: Le code à afficher
+    - {{language}}: Langage pour la coloration (optionnel)
+    - {{filename}}: Nom du fichier (optionnel)
+    - {{showLineNumbers}}: Afficher les numéros de ligne (optionnel)
+-->
+<div class="code-block">
+    {{#if filename}}
+    <div class="code-block-header">
+        <span class="code-block-filename">{{filename}}</span>
+        {{#if language}}
+        <span class="code-block-language">{{language}}</span>
+        {{/if}}
+    </div>
+    {{/if}}
+    <pre class="code-block-pre{{#if showLineNumbers}} code-block-pre--line-numbers{{/if}}"><code class="code-block-code{{#if language}} language-{{language}}{{/if}}">{{code}}</code></pre>
+</div>

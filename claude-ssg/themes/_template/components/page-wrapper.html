@@ -1,0 +1,37 @@
+<!--
+    Composant: page-wrapper
+    Description: Structure de base de toute page HTML
+
+    Slots:
+    - {{slot:header}}: En-tête du site
+    - {{slot:content}}: Contenu principal
+    - {{slot:footer}}: Pied de page
+
+    Variables:
+    - {{page.title}}: Titre de la page
+    - {{site.name}}: Nom du site
+    - {{site.language}}: Langue du site
+-->
+<!DOCTYPE html>
+<html lang="{{site.language|fr}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{page.title}} | {{site.name}}</title>
+    {{#if page.description}}
+    <meta name="description" content="{{page.description}}">
+    {{/if}}
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    {{slot:header}}
+
+    <main class="site-main" id="main-content">
+        {{slot:content}}
+    </main>
+
+    {{slot:footer}}
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

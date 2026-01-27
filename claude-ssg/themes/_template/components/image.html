@@ -1,0 +1,25 @@
+<!--
+    Composant: image
+    Description: Image avec légende optionnelle
+
+    Paramètres:
+    - {{src}}: Source de l'image
+    - {{alt}}: Texte alternatif (requis pour accessibilité)
+    - {{caption}}: Légende (optionnel)
+    - {{width}}: Largeur (optionnel)
+    - {{height}}: Hauteur (optionnel)
+    - {{lazy}}: true pour chargement différé (défaut: true)
+-->
+<figure class="image-figure">
+    <img
+        src="{{src}}"
+        alt="{{alt}}"
+        class="image"
+        {{#if width}}width="{{width}}"{{/if}}
+        {{#if height}}height="{{height}}"{{/if}}
+        {{#if lazy}}loading="lazy"{{/if}}
+    >
+    {{#if caption}}
+    <figcaption class="image-caption">{{caption}}</figcaption>
+    {{/if}}
+</figure>
