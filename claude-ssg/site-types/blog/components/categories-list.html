@@ -1,0 +1,41 @@
+<!--
+  Composant : Categories List
+  Usage : {{>categories-list taxonomy=categories}}
+
+  Variables :
+  - taxonomy.terms : Array de toutes les catégories
+  - taxonomy.terms[].name : Nom de la catégorie
+  - taxonomy.terms[].slug : Slug
+  - taxonomy.terms[].url : URL de la page catégorie
+  - taxonomy.terms[].count : Nombre d'articles
+  - taxonomy.terms[].description : Description (optionnel)
+  - taxonomy.terms[].children : Sous-catégories (si hiérarchique)
+-->
+
+<nav class="st-categories-list">
+  <h3 class="st-categories-title">Catégories</h3>
+
+  <ul class="st-categories-items">
+    {{#each taxonomy.terms}}
+    <li class="st-category-item">
+      <a href="{{this.url}}" class="st-category-link">
+        <span class="st-category-name">{{this.name}}</span>
+        <span class="st-category-count">{{this.count}}</span>
+      </a>
+
+      {{#if this.children}}
+      <ul class="st-subcategories">
+        {{#each this.children}}
+        <li>
+          <a href="{{this.url}}">
+            {{this.name}}
+            <span class="st-category-count">{{this.count}}</span>
+          </a>
+        </li>
+        {{/each}}
+      </ul>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</nav>

@@ -1,0 +1,91 @@
+<!--
+  Composant : Author Box
+  Usage : {{>author-box author=page.author}}
+
+  Variables :
+  - author.name : Nom de l'auteur
+  - author.slug : Slug de l'auteur
+  - author.url : URL de la page auteur
+  - author.bio : Biographie
+  - author.avatar : URL de l'avatar
+  - author.social : Réseaux sociaux
+-->
+
+<aside class="st-author-box">
+  <div class="st-author-box-content">
+    {{#if author.avatar}}
+    <a href="{{author.url}}" class="st-author-box-avatar">
+      <img src="{{author.avatar}}" alt="{{author.name}}">
+    </a>
+    {{/if}}
+
+    <div class="st-author-box-info">
+      <p class="st-author-box-label">Écrit par</p>
+      <h3 class="st-author-box-name">
+        <a href="{{author.url}}">{{author.name}}</a>
+      </h3>
+
+      {{#if author.bio}}
+      <p class="st-author-box-bio">{{author.bio}}</p>
+      {{/if}}
+
+      {{#if author.social}}
+      <ul class="st-author-box-social">
+        {{#if author.social.twitter}}
+        <li>
+          <a href="https://twitter.com/{{author.social.twitter}}"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Twitter de {{author.name}}">
+            <svg class="st-icon" aria-hidden="true">
+              <use href="#icon-twitter"></use>
+            </svg>
+          </a>
+        </li>
+        {{/if}}
+
+        {{#if author.social.github}}
+        <li>
+          <a href="https://github.com/{{author.social.github}}"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="GitHub de {{author.name}}">
+            <svg class="st-icon" aria-hidden="true">
+              <use href="#icon-github"></use>
+            </svg>
+          </a>
+        </li>
+        {{/if}}
+
+        {{#if author.social.linkedin}}
+        <li>
+          <a href="https://linkedin.com/in/{{author.social.linkedin}}"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="LinkedIn de {{author.name}}">
+            <svg class="st-icon" aria-hidden="true">
+              <use href="#icon-linkedin"></use>
+            </svg>
+          </a>
+        </li>
+        {{/if}}
+
+        {{#if author.social.email}}
+        <li>
+          <a href="mailto:{{author.social.email}}"
+             aria-label="Email {{author.name}}">
+            <svg class="st-icon" aria-hidden="true">
+              <use href="#icon-email"></use>
+            </svg>
+          </a>
+        </li>
+        {{/if}}
+      </ul>
+      {{/if}}
+    </div>
+  </div>
+
+  <a href="{{author.url}}" class="st-author-box-link">
+    Voir tous les articles de {{author.name}} →
+  </a>
+</aside>

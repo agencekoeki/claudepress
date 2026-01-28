@@ -1,0 +1,72 @@
+<!--
+  Composant : Article List
+  Usage : {{>article-list items=pagination.items}}
+
+  Variables :
+  - items : Array d'articles à afficher
+  - showImage : Afficher les images (défaut: true)
+  - showExcerpt : Afficher les extraits (défaut: true)
+  - showMeta : Afficher les métadonnées (défaut: true)
+-->
+
+<div class="st-article-list">
+  {{#each items}}
+  <article class="st-article-list-item">
+    {{#if this.image}}
+    <a href="{{this.url}}" class="st-article-list-image">
+      <img
+        src="{{this.image}}"
+        alt="{{this.title}}"
+        loading="lazy"
+      >
+    </a>
+    {{/if}}
+
+    <div class="st-article-list-content">
+      <header class="st-article-list-header">
+        {{#if this.categories.[0]}}
+        <span class="st-article-list-category">
+          <a href="{{this.categories.[0].url}}">{{this.categories.[0].name}}</a>
+        </span>
+        {{/if}}
+
+        <h2 class="st-article-list-title">
+          <a href="{{this.url}}">{{this.title}}</a>
+        </h2>
+      </header>
+
+      {{#if this.description}}
+      <p class="st-article-list-excerpt">
+        {{truncate this.description 200}}
+      </p>
+      {{/if}}
+
+      <footer class="st-article-list-meta">
+        <time datetime="{{formatDate this.date 'YYYY-MM-DD'}}">
+          {{formatDate this.date 'DD MMM YYYY'}}
+        </time>
+
+        {{#if this.author}}
+        <span class="st-article-list-author">
+          par <a href="{{this.author.url}}">{{this.author.name}}</a>
+        </span>
+        {{/if}}
+
+        {{#if this.readingTime}}
+        <span class="st-article-list-reading-time">
+          {{this.readingTime}} min
+        </span>
+        {{/if}}
+
+        {{#if this.tags}}
+        <ul class="st-article-list-tags">
+          {{#each this.tags limit=3}}
+          <li><a href="{{this.url}}">{{this.name}}</a></li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </footer>
+    </div>
+  </article>
+  {{/each}}
+</div>

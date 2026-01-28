@@ -1,0 +1,58 @@
+<!--
+  Composant : Reading Progress Bar
+  Usage : {{>reading-progress}}
+
+  Affiche une barre de progression de lecture en haut de page.
+  Fonctionne uniquement sur les pages articles.
+-->
+
+<div class="st-reading-progress" role="progressbar" aria-label="Progression de lecture">
+  <div class="st-reading-progress-bar"></div>
+</div>
+
+<style>
+.st-reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  z-index: 9999;
+}
+
+.st-reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--th-color-primary, #3b82f6);
+  transition: width 0.1s ease-out;
+}
+</style>
+
+<script>
+(function() {
+  var progressBar = document.querySelector('.st-reading-progress-bar');
+  var article = document.querySelector('.st-article-content');
+
+  if (!progressBar || !article) return;
+
+  function updateProgress() {
+    var articleTop = article.offsetTop;
+    var articleHeight = article.offsetHeight;
+    var windowHeight = window.innerHeight;
+    var scrollTop = window.scrollY;
+
+    var start = articleTop - windowHeight;
+    var end = articleTop + articleHeight;
+    var current = scrollTop - start;
+    var total = end - start;
+
+    var progress = Math.max(0, Math.min(100, (current / total) * 100));
+    progressBar.style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+})();
+</script>

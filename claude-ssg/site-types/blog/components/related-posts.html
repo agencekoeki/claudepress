@@ -1,0 +1,43 @@
+<!--
+  Composant : Related Posts
+  Usage : {{>related-posts}}
+
+  Variables (automatiques) :
+  - relatedPosts : Array d'articles connexes (max 3)
+
+  Configuration dans preset.json :
+  - relatedPosts.count : Nombre d'articles (défaut: 3)
+  - relatedPosts.algorithm : 'tags' | 'category' | 'recent'
+-->
+
+{{#if relatedPosts}}
+<aside class="st-related-posts">
+  <h2 class="st-related-posts-title">Articles similaires</h2>
+
+  <div class="st-related-posts-grid">
+    {{#each relatedPosts}}
+    <article class="st-related-post">
+      {{#if this.image}}
+      <a href="{{this.url}}" class="st-related-post-image">
+        <img
+          src="{{this.image}}"
+          alt="{{this.title}}"
+          loading="lazy"
+        >
+      </a>
+      {{/if}}
+
+      <div class="st-related-post-content">
+        <h3 class="st-related-post-title">
+          <a href="{{this.url}}">{{this.title}}</a>
+        </h3>
+
+        <time datetime="{{formatDate this.date 'YYYY-MM-DD'}}">
+          {{formatDate this.date 'DD MMM YYYY'}}
+        </time>
+      </div>
+    </article>
+    {{/each}}
+  </div>
+</aside>
+{{/if}}

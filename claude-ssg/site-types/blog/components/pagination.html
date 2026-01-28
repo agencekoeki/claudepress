@@ -1,0 +1,67 @@
+<!--
+  Composant : Pagination
+  Usage : {{>pagination}}
+
+  Variables (automatiques) :
+  - pagination.current : Page courante
+  - pagination.total : Nombre total de pages
+  - pagination.prev : URL page précédente (null si première)
+  - pagination.next : URL page suivante (null si dernière)
+  - pagination.pages : Array de toutes les pages
+-->
+
+{{#if (gt pagination.total 1)}}
+<nav class="st-pagination" aria-label="Pagination">
+  <ul class="st-pagination-list">
+    <!-- Bouton Précédent -->
+    <li class="st-pagination-item st-pagination-prev">
+      {{#if pagination.prev}}
+      <a href="{{pagination.prev}}" rel="prev">
+        <span aria-hidden="true">←</span>
+        <span>Précédent</span>
+      </a>
+      {{else}}
+      <span class="st-pagination-disabled">
+        <span aria-hidden="true">←</span>
+        <span>Précédent</span>
+      </span>
+      {{/if}}
+    </li>
+
+    <!-- Numéros de page -->
+    {{#each pagination.pages}}
+    <li class="st-pagination-item st-pagination-number">
+      {{#if this.current}}
+      <span class="st-pagination-current" aria-current="page">
+        {{this.number}}
+      </span>
+      {{else if this.ellipsis}}
+      <span class="st-pagination-ellipsis">…</span>
+      {{else}}
+      <a href="{{this.url}}">{{this.number}}</a>
+      {{/if}}
+    </li>
+    {{/each}}
+
+    <!-- Bouton Suivant -->
+    <li class="st-pagination-item st-pagination-next">
+      {{#if pagination.next}}
+      <a href="{{pagination.next}}" rel="next">
+        <span>Suivant</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      {{else}}
+      <span class="st-pagination-disabled">
+        <span>Suivant</span>
+        <span aria-hidden="true">→</span>
+      </span>
+      {{/if}}
+    </li>
+  </ul>
+
+  <!-- Info pagination -->
+  <p class="st-pagination-info">
+    Page {{pagination.current}} sur {{pagination.total}}
+  </p>
+</nav>
+{{/if}}

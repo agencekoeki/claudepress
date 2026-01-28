@@ -1,0 +1,165 @@
+<!--
+  Composant : Newsletter Form
+  Usage : {{>newsletter-form}}
+
+  Variables (depuis site.json) :
+  - site.newsletter.action : URL du formulaire
+  - site.newsletter.provider : 'mailchimp' | 'sendinblue' | 'custom'
+  - site.newsletter.title : Titre (optionnel)
+  - site.newsletter.description : Description (optionnel)
+-->
+
+<aside class="st-newsletter">
+  <div class="st-newsletter-content">
+    <h3 class="st-newsletter-title">
+      {{#if site.newsletter.title}}
+        {{site.newsletter.title}}
+      {{else}}
+        Restez informé
+      {{/if}}
+    </h3>
+
+    {{#if site.newsletter.description}}
+    <p class="st-newsletter-description">
+      {{site.newsletter.description}}
+    </p>
+    {{else}}
+    <p class="st-newsletter-description">
+      Recevez nos derniers articles directement dans votre boîte mail.
+    </p>
+    {{/if}}
+
+    <form class="st-newsletter-form"
+          action="{{site.newsletter.action}}"
+          method="POST"
+          {{#if (eq site.newsletter.provider 'mailchimp')}}
+          target="_blank"
+          {{/if}}>
+
+      <div class="st-newsletter-field">
+        <label for="newsletter-email" class="st-visually-hidden">
+          Adresse email
+        </label>
+        <input type="email"
+               id="newsletter-email"
+               name="{{#if (eq site.newsletter.provider 'mailchimp')}}EMAIL{{else}}email{{/if}}"
+               placeholder="votre@email.com"
+               required
+               class="st-newsletter-input">
+      </div>
+
+      {{#if site.newsletter.firstName}}
+      <div class="st-newsletter-field">
+        <label for="newsletter-name" class="st-visually-hidden">
+          Prénom
+        </label>
+        <input type="text"
+               id="newsletter-name"
+               name="{{#if (eq site.newsletter.provider 'mailchimp')}}FNAME{{else}}firstName{{/if}}"
+               placeholder="Prénom (optionnel)"
+               class="st-newsletter-input">
+      </div>
+      {{/if}}
+
+      <button type="submit" class="st-newsletter-button">
+        S'abonner
+      </button>
+    </form>
+
+    <p class="st-newsletter-privacy">
+      Pas de spam. Désinscription en un clic.
+    </p>
+  </div>
+</aside>
+
+<style>
+.st-newsletter {
+  background: var(--th-color-primary, #3b82f6);
+  color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.st-newsletter-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.st-newsletter-description {
+  margin: 0 0 1.5rem 0;
+  opacity: 0.9;
+}
+
+.st-newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.st-newsletter-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.st-newsletter-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.st-newsletter-input:focus {
+  outline: none;
+  border-color: white;
+}
+
+.st-newsletter-button {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: var(--th-color-primary, #3b82f6);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.st-newsletter-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.st-newsletter-privacy {
+  margin: 1rem 0 0 0;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.st-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  .st-newsletter-form {
+    flex-direction: column;
+  }
+
+  .st-newsletter-button {
+    width: 100%;
+  }
+}
+</style>

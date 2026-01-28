@@ -1,0 +1,29 @@
+<!--
+  Composant : Tag Cloud
+  Usage : {{>tag-cloud taxonomy=tags}}
+
+  Variables :
+  - taxonomy.terms : Array de tous les tags
+  - taxonomy.terms[].name : Nom du tag
+  - taxonomy.terms[].slug : Slug du tag
+  - taxonomy.terms[].url : URL de la page du tag
+  - taxonomy.terms[].count : Nombre d'articles
+-->
+
+<div class="st-tag-cloud">
+  <h3 class="st-tag-cloud-title">Tags</h3>
+
+  <ul class="st-tag-cloud-list">
+    {{#each taxonomy.terms}}
+    <li>
+      <a href="{{this.url}}"
+         class="st-tag-cloud-tag"
+         data-count="{{this.count}}"
+         title="{{this.count}} article{{#if (gt this.count 1)}}s{{/if}}">
+        {{this.name}}
+        <span class="st-tag-cloud-count">({{this.count}})</span>
+      </a>
+    </li>
+    {{/each}}
+  </ul>
+</div>

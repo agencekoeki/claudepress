@@ -1,0 +1,174 @@
+<!--
+  Composant : Table of Contents
+  Usage : {{>table-of-contents}}
+
+  Génère automatiquement une table des matières basée sur les h2 et h3.
+  La TOC est générée dynamiquement côté client.
+-->
+
+<nav class="st-toc" aria-labelledby="st-toc-title">
+  <h2 id="st-toc-title" class="st-toc-title">
+    <button class="st-toc-toggle" aria-expanded="true">
+      Dans cet article
+      <svg class="st-toc-icon" aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </button>
+  </h2>
+
+  <ol class="st-toc-list" id="st-toc-list">
+    <!-- Généré dynamiquement -->
+  </ol>
+</nav>
+
+<style>
+.st-toc {
+  background: var(--th-color-bg-alt, #f8f9fa);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.st-toc-title {
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+.st-toc-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.st-toc-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s;
+}
+
+.st-toc-toggle[aria-expanded="false"] .st-toc-icon {
+  transform: rotate(-90deg);
+}
+
+.st-toc-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: none;
+}
+
+.st-toc-list[hidden] {
+  display: none;
+}
+
+.st-toc-item {
+  margin: 0.5rem 0;
+}
+
+.st-toc-link {
+  color: var(--th-color-text, #333);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.st-toc-link:hover,
+.st-toc-link.st-active {
+  color: var(--th-color-primary, #3b82f6);
+}
+
+.st-toc-link.st-active {
+  font-weight: 600;
+}
+
+.st-toc-sublist {
+  margin: 0.5rem 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.st-toc-subitem {
+  margin: 0.25rem 0;
+  font-size: 0.9em;
+}
+</style>
+
+<script>
+(function() {
+  var tocList = document.getElementById('st-toc-list');
+  var toggle = document.querySelector('.st-toc-toggle');
+  var articleContent = document.querySelector('.st-article-content');
+
+  if (!tocList || !articleContent) return;
+
+  // Générer la TOC
+  var headings = articleContent.querySelectorAll('h2, h3');
+  var currentH2 = null;
+
+  headings.forEach(function(heading, index) {
+    // Ajouter un ID si absent
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.className = 'st-toc-link';
+
+    if (heading.tagName === 'H2') {
+      li.className = 'st-toc-item';
+      li.appendChild(a);
+      tocList.appendChild(li);
+      currentH2 = li;
+    } else if (heading.tagName === 'H3' && currentH2) {
+      li.className = 'st-toc-subitem';
+      li.appendChild(a);
+
+      var sublist = currentH2.querySelector('.st-toc-sublist');
+      if (!sublist) {
+        sublist = document.createElement('ol');
+        sublist.className = 'st-toc-sublist';
+        currentH2.appendChild(sublist);
+      }
+      sublist.appendChild(li);
+    }
+  });
+
+  // Toggle
+  toggle.addEventListener('click', function() {
+    var expanded = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', !expanded);
+    tocList.hidden = expanded;
+  });
+
+  // Highlight active section
+  function updateActiveLink() {
+    var scrollPos = window.scrollY + 100;
+    var activeLink = null;
+
+    headings.forEach(function(heading) {
+      if (heading.offsetTop <= scrollPos) {
+        activeLink = heading;
+      }
+    });
+
+    document.querySelectorAll('.st-toc-link').forEach(function(link) {
+      link.classList.remove('st-active');
+    });
+
+    if (activeLink) {
+      var link = tocList.querySelector('a[href="#' + activeLink.id + '"]');
+      if (link) link.classList.add('st-active');
+    }
+  }
+
+  window.addEventListener('scroll', updateActiveLink, { passive: true });
+  updateActiveLink();
+})();
+</script>

@@ -1,0 +1,166 @@
+{
+  "name": "Blog",
+  "version": "1.0.0",
+  "description": "Type de site optimisé pour les blogs et publications",
+  "author": "Claude SSG",
+
+  "extends": null,
+
+  "features": {
+    "blog": true,
+    "pagination": true,
+    "taxonomies": true,
+    "rss": true,
+    "search": true,
+    "comments": false,
+    "newsletter": true,
+    "readingTime": true,
+    "tableOfContents": true,
+    "relatedPosts": true,
+    "authorBox": true,
+    "shareButtons": true,
+    "readingProgress": true
+  },
+
+  "collections": {
+    "posts": {
+      "path": "content/blog",
+      "output": "blog",
+      "permalink": "blog/:slug/",
+      "sort": "date",
+      "order": "desc",
+      "pagination": {
+        "enabled": true,
+        "perPage": 10,
+        "path": "page/:num/"
+      },
+      "feed": {
+        "enabled": true,
+        "format": ["rss", "atom"],
+        "limit": 20
+      },
+      "taxonomies": ["tags", "categories", "authors"]
+    }
+  },
+
+  "taxonomies": {
+    "tags": {
+      "name": "Tags",
+      "singular": "tag",
+      "path": "tags",
+      "permalink": "tags/:slug/",
+      "pagination": true,
+      "perPage": 20,
+      "generateIndex": true
+    },
+    "categories": {
+      "name": "Catégories",
+      "singular": "category",
+      "path": "categories",
+      "permalink": "categories/:slug/",
+      "hierarchical": true,
+      "pagination": true,
+      "perPage": 10,
+      "generateIndex": true
+    },
+    "authors": {
+      "name": "Auteurs",
+      "singular": "author",
+      "path": "authors",
+      "permalink": "authors/:slug/",
+      "dataFile": "_data/authors.json",
+      "pagination": true,
+      "perPage": 10,
+      "generateIndex": true
+    }
+  },
+
+  "pages": {
+    "required": ["index", "blog/_index"],
+    "recommended": ["about", "contact"],
+    "optional": ["archive", "search"]
+  },
+
+  "layouts": {
+    "default": "default",
+    "homepage": "homepage",
+    "post": "post",
+    "page": "page",
+    "blog-list": "blog-list",
+    "taxonomy-index": "taxonomy-index",
+    "taxonomy-term": "taxonomy-term",
+    "author": "author",
+    "archive": "archive"
+  },
+
+  "components": {
+    "required": [
+      "article-card",
+      "article-full",
+      "article-list",
+      "pagination"
+    ],
+    "optional": [
+      "author-box",
+      "related-posts",
+      "tag-cloud",
+      "categories-list",
+      "archive-list",
+      "share-buttons",
+      "reading-progress",
+      "table-of-contents",
+      "newsletter-form"
+    ]
+  },
+
+  "frontmatter": {
+    "post": {
+      "required": ["title", "date"],
+      "recommended": ["description", "author", "tags"],
+      "optional": ["categories", "image", "draft", "featured", "readingTime"]
+    }
+  },
+
+  "defaults": {
+    "post": {
+      "layout": "post",
+      "author": null,
+      "tags": [],
+      "categories": [],
+      "draft": false,
+      "featured": false,
+      "comments": true,
+      "share": true,
+      "toc": false
+    }
+  },
+
+  "seo": {
+    "structuredData": {
+      "article": true,
+      "breadcrumb": true,
+      "author": true
+    },
+    "openGraph": {
+      "type": "article"
+    }
+  },
+
+  "reading": {
+    "wordsPerMinute": 200,
+    "showEstimate": true,
+    "format": "{minutes} min de lecture"
+  },
+
+  "relatedPosts": {
+    "count": 3,
+    "algorithm": "tags",
+    "fallback": "recent"
+  },
+
+  "archive": {
+    "groupBy": "year",
+    "showCount": true,
+    "order": "desc"
+  }
+}

@@ -1,0 +1,65 @@
+<!--
+  Composant : Article Card
+  Usage : {{>article-card article=post}}
+
+  Variables :
+  - article.title : Titre de l'article
+  - article.url : URL de l'article
+  - article.date : Date de publication
+  - article.description : Description/extrait
+  - article.image : Image de couverture (optionnel)
+  - article.author : Auteur (optionnel)
+  - article.tags : Tags (optionnel)
+  - article.readingTime : Temps de lecture (optionnel)
+-->
+
+<article class="st-article-card">
+  {{#if article.image}}
+  <a href="{{article.url}}" class="st-article-card-image">
+    <img
+      src="{{article.image}}"
+      alt="{{#if article.imageAlt}}{{article.imageAlt}}{{else}}{{article.title}}{{/if}}"
+      loading="lazy"
+    >
+  </a>
+  {{/if}}
+
+  <div class="st-article-card-content">
+    {{#if article.categories.[0]}}
+    <span class="st-article-card-category">
+      <a href="{{article.categories.[0].url}}">{{article.categories.[0].name}}</a>
+    </span>
+    {{/if}}
+
+    <h2 class="st-article-card-title">
+      <a href="{{article.url}}">{{article.title}}</a>
+    </h2>
+
+    {{#if article.description}}
+    <p class="st-article-card-excerpt">
+      {{truncate article.description 160}}
+    </p>
+    {{/if}}
+
+    <footer class="st-article-card-meta">
+      <time datetime="{{formatDate article.date 'YYYY-MM-DD'}}">
+        {{formatDate article.date 'DD MMMM YYYY'}}
+      </time>
+
+      {{#if article.author}}
+      <span class="st-article-card-author">
+        {{#if article.author.avatar}}
+        <img src="{{article.author.avatar}}" alt="" class="st-author-avatar-small">
+        {{/if}}
+        <a href="{{article.author.url}}">{{article.author.name}}</a>
+      </span>
+      {{/if}}
+
+      {{#if article.readingTime}}
+      <span class="st-article-card-reading-time">
+        {{article.readingTime}} min de lecture
+      </span>
+      {{/if}}
+    </footer>
+  </div>
+</article>

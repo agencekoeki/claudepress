@@ -1,0 +1,40 @@
+<!--
+  Composant : Archive List
+  Usage : {{>archive-list}}
+
+  Variables (automatiques) :
+  - archives : Array groupé par année/mois
+  - archives[].year : Année
+  - archives[].months : Mois de l'année
+  - archives[].months[].month : Numéro du mois
+  - archives[].months[].name : Nom du mois
+  - archives[].months[].count : Nombre d'articles
+  - archives[].months[].url : URL de l'archive
+  - archives[].count : Nombre total d'articles de l'année
+-->
+
+<nav class="st-archive-list">
+  <h2 class="st-archive-title">Archives</h2>
+
+  <div class="st-archive-years">
+    {{#each archives}}
+    <details class="st-archive-year" {{#if @first}}open{{/if}}>
+      <summary>
+        <span class="st-archive-year-name">{{this.year}}</span>
+        <span class="st-archive-year-count">({{this.count}} articles)</span>
+      </summary>
+
+      <ul class="st-archive-months">
+        {{#each this.months}}
+        <li class="st-archive-month">
+          <a href="{{this.url}}">
+            <span class="st-archive-month-name">{{this.name}}</span>
+            <span class="st-archive-month-count">{{this.count}}</span>
+          </a>
+        </li>
+        {{/each}}
+      </ul>
+    </details>
+    {{/each}}
+  </div>
+</nav>

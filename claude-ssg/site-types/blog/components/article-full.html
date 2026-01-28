@@ -1,0 +1,115 @@
+<!--
+  Composant : Article Full (page article complète)
+  Usage : {{>article-full}}
+
+  Variables :
+  - page.title : Titre
+  - page.date : Date de publication
+  - page.updated : Date de mise à jour (optionnel)
+  - page.author : Auteur
+  - page.image : Image de couverture
+  - page.tags : Tags
+  - page.categories : Catégories
+  - page.readingTime : Temps de lecture
+  - page.toc : Afficher table des matières
+  - content : Contenu HTML de l'article
+-->
+
+<article class="st-article-full">
+  <!-- Breadcrumb -->
+  <nav class="st-breadcrumb" aria-label="Fil d'Ariane">
+    <ol>
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      {{#if page.categories.[0]}}
+      <li><a href="{{page.categories.[0].url}}">{{page.categories.[0].name}}</a></li>
+      {{/if}}
+      <li aria-current="page">{{page.title}}</li>
+    </ol>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="st-article-header">
+    {{#if page.categories.[0]}}
+    <span class="st-article-category">
+      <a href="{{page.categories.[0].url}}">{{page.categories.[0].name}}</a>
+    </span>
+    {{/if}}
+
+    <h1 class="st-article-title">{{page.title}}</h1>
+
+    <div class="st-article-meta">
+      <time datetime="{{formatDate page.date 'YYYY-MM-DD'}}">
+        {{formatDate page.date 'DD MMMM YYYY'}}
+      </time>
+
+      {{#if page.updated}}
+      <span class="st-article-updated">
+        (mis à jour le {{formatDate page.updated 'DD MMMM YYYY'}})
+      </span>
+      {{/if}}
+
+      {{#if page.author}}
+      <span class="st-article-author">
+        par <a href="{{page.author.url}}">{{page.author.name}}</a>
+      </span>
+      {{/if}}
+
+      {{#if page.readingTime}}
+      <span class="st-article-reading-time">
+        {{page.readingTime}} min de lecture
+      </span>
+      {{/if}}
+    </div>
+  </header>
+
+  {{#if page.image}}
+  <figure class="st-article-cover">
+    <img
+      src="{{page.image}}"
+      alt="{{#if page.imageAlt}}{{page.imageAlt}}{{else}}{{page.title}}{{/if}}"
+    >
+    {{#if page.imageCaption}}
+    <figcaption>{{page.imageCaption}}</figcaption>
+    {{/if}}
+  </figure>
+  {{/if}}
+
+  <!-- Table of Contents -->
+  {{#if page.toc}}
+  {{>table-of-contents}}
+  {{/if}}
+
+  <!-- Article Content -->
+  <div class="st-article-content">
+    {{content}}
+  </div>
+
+  <!-- Article Footer -->
+  <footer class="st-article-footer">
+    {{#if page.tags}}
+    <div class="st-article-tags">
+      <span class="st-tags-label">Tags :</span>
+      <ul class="st-tag-list">
+        {{#each page.tags}}
+        <li>
+          <a href="{{this.url}}" class="st-tag">{{this.name}}</a>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+
+    {{#if page.share}}
+    {{>share-buttons}}
+    {{/if}}
+  </footer>
+
+  <!-- Author Box -->
+  {{#if page.author}}
+  {{>author-box author=page.author}}
+  {{/if}}
+
+  <!-- Related Posts -->
+  {{>related-posts}}
+</article>
