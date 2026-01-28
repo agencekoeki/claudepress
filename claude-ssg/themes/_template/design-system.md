@@ -1,111 +1,203 @@
-# Design System
+# Design System : [Nom du thème]
 
-## Overview
+> Version: 1.0.0
+> Ce document est un CONTRAT. Chaque élément DOIT être reproduit à l'identique.
 
-This document defines the design tokens and visual rules for the theme.
+## Principes de design
 
-## Color Palette
+[Décrire les principes visuels du thème : minimaliste, bold, editorial, etc.]
 
-### Primary Colors
-```
---color-primary: #007bff
---color-primary-light: #4da3ff
---color-primary-dark: #0056b3
-```
+---
 
-### Neutral Colors
-```
---color-neutral-100: #f8f9fa
---color-neutral-200: #e9ecef
---color-neutral-300: #dee2e6
---color-neutral-400: #ced4da
---color-neutral-500: #adb5bd
---color-neutral-600: #6c757d
---color-neutral-700: #495057
---color-neutral-800: #343a40
---color-neutral-900: #212529
-```
+## Tokens de référence
 
-### Semantic Colors
-```
---color-success: #28a745
---color-warning: #ffc107
---color-error: #dc3545
---color-info: #17a2b8
+Voir `theme.json` pour les valeurs exactes.
+
+---
+
+## Composants
+
+### Header (`header.html`)
+```html
+<header class="th-header">
+  <div class="th-container">
+    <a href="/" class="th-logo">{{site.title}}</a>
+    {{>nav}}
+  </div>
+</header>
 ```
 
-## Typography
+#### Spécifications
+| Propriété | Valeur |
+|-----------|--------|
+| Hauteur | 64px |
+| Background | `{{colors.background}}` |
+| Border-bottom | 1px solid `{{colors.border}}` |
+| Position | sticky (top: 0) après scroll de 100px |
+| Z-index | 100 |
 
-### Font Families
-```
---font-family-base: system-ui, -apple-system, sans-serif
---font-family-heading: var(--font-family-base)
---font-family-mono: 'SF Mono', 'Consolas', monospace
-```
+#### Classes
+| Classe | Styles |
+|--------|--------|
+| `.th-header` | `height: 64px; border-bottom: 1px solid var(--color-border);` |
+| `.th-container` | `max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between;` |
+| `.th-logo` | `font-size: 1.125rem; font-weight: 600; color: var(--color-text); text-decoration: none;` |
 
-### Font Sizes
-```
---font-size-xs: 0.75rem
---font-size-sm: 0.875rem
---font-size-base: 1rem
---font-size-lg: 1.125rem
---font-size-xl: 1.25rem
---font-size-2xl: 1.5rem
---font-size-3xl: 2rem
---font-size-4xl: 2.5rem
-```
+---
 
-### Line Heights
-```
---line-height-tight: 1.25
---line-height-base: 1.5
---line-height-relaxed: 1.75
-```
-
-## Spacing
-
-```
---spacing-xs: 0.25rem
---spacing-sm: 0.5rem
---spacing-md: 1rem
---spacing-lg: 1.5rem
---spacing-xl: 2rem
---spacing-2xl: 3rem
---spacing-3xl: 4rem
+### Navigation (`nav.html`)
+```html
+<nav class="th-nav">
+  <ul class="th-nav-list">
+    {{#each site.navigation}}
+    <li class="th-nav-item">
+      <a href="{{this.url}}" class="th-nav-link{{#if this.active}} th-nav-link--active{{/if}}">
+        {{this.label}}
+      </a>
+    </li>
+    {{/each}}
+  </ul>
+</nav>
 ```
 
-## Borders
+#### Classes
+| Classe | Styles |
+|--------|--------|
+| `.th-nav-list` | `display: flex; gap: 32px; list-style: none; margin: 0; padding: 0;` |
+| `.th-nav-link` | `font-size: 0.875rem; color: var(--color-text-muted); text-decoration: none; transition: color 200ms ease;` |
+| `.th-nav-link:hover` | `color: var(--color-text);` |
+| `.th-nav-link--active` | `color: var(--color-text); font-weight: 500;` |
 
-```
---border-radius-sm: 0.25rem
---border-radius-md: 0.5rem
---border-radius-lg: 1rem
---border-radius-full: 9999px
+---
 
---border-width: 1px
---border-color: var(--color-neutral-300)
-```
-
-## Shadows
-
-```
---shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05)
---shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1)
---shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1)
-```
-
-## Breakpoints
-
-```
---breakpoint-sm: 640px
---breakpoint-md: 768px
---breakpoint-lg: 1024px
---breakpoint-xl: 1280px
+### Footer (`footer.html`)
+```html
+<footer class="th-footer">
+  <div class="th-container">
+    <p class="th-footer-text">© {{site.year}} {{site.title}}</p>
+  </div>
+</footer>
 ```
 
-## Usage Guidelines
+#### Classes
+| Classe | Styles |
+|--------|--------|
+| `.th-footer` | `padding: 48px 0; border-top: 1px solid var(--color-border); margin-top: 64px;` |
+| `.th-footer-text` | `font-size: 0.875rem; color: var(--color-text-muted);` |
 
-1. Always use design tokens instead of hard-coded values
-2. Maintain consistent spacing using the spacing scale
-3. Use semantic color names for UI states
-4. Follow the type scale for visual hierarchy
+---
+
+### Page Wrapper (`page-wrapper.html`)
+```html
+<!DOCTYPE html>
+<html lang="{{site.lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{page.title}}{{#if site.title}} | {{site.title}}{{/if}}</title>
+  <meta name="description" content="{{page.description | default site.description}}">
+  {{>head-extra}}
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body class="th-body {{page.body_class}}">
+  {{>header}}
+
+  <main class="th-main">
+    <div class="th-container">
+      {{CONTENT}}
+    </div>
+  </main>
+
+  {{>footer}}
+  {{>scripts}}
+</body>
+</html>
+```
+
+---
+
+### Article (`article.html`)
+```html
+<article class="th-article">
+  <header class="th-article-header">
+    <h1 class="th-article-title">{{page.title}}</h1>
+    {{#if page.date}}
+    <time class="th-article-date" datetime="{{page.date}}">
+      {{formatDate page.date "DD MMMM YYYY"}}
+    </time>
+    {{/if}}
+  </header>
+
+  <div class="th-article-content th-prose">
+    {{{page.content}}}
+  </div>
+</article>
+```
+
+---
+
+### Typographie (classes `.th-prose`)
+
+Ces classes s'appliquent au contenu parsé du Markdown.
+
+| Élément | Classe | Styles principaux |
+|---------|--------|-------------------|
+| `h1` | `.th-h1` | `font-size: 2.25rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem;` |
+| `h2` | `.th-h2` | `font-size: 1.5rem; font-weight: 600; line-height: 1.3; margin-top: 2rem; margin-bottom: 0.75rem;` |
+| `h3` | `.th-h3` | `font-size: 1.25rem; font-weight: 600; line-height: 1.4; margin-top: 1.5rem; margin-bottom: 0.5rem;` |
+| `p` | `.th-p` | `font-size: 1rem; line-height: 1.75; margin-bottom: 1rem;` |
+| `a` | `.th-link` | `color: var(--color-accent); text-decoration: underline;` |
+| `ul` | `.th-ul` | `list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem;` |
+| `ol` | `.th-ol` | `list-style: decimal; padding-left: 1.5rem; margin-bottom: 1rem;` |
+| `li` | `.th-li` | `margin-bottom: 0.25rem;` |
+| `blockquote` | `.th-blockquote` | `border-left: 3px solid var(--color-border); padding-left: 1rem; font-style: italic; color: var(--color-text-muted);` |
+| `code` (inline) | `.th-code-inline` | `font-family: var(--font-mono); font-size: 0.875em; background: var(--color-surface); padding: 0.125rem 0.25rem; border-radius: 3px;` |
+| `pre > code` | `.th-code-block` | `display: block; padding: 1rem; background: var(--color-surface); border-radius: 6px; overflow-x: auto;` |
+| `hr` | `.th-hr` | `border: none; border-top: 1px solid var(--color-border); margin: 2rem 0;` |
+| `img` | `.th-img` | `max-width: 100%; height: auto; border-radius: 6px;` |
+
+---
+
+## Responsive
+
+### Breakpoints
+| Nom | Min-width | Usage |
+|-----|-----------|-------|
+| Mobile | < 640px | Stack vertical, full-width |
+| Tablet | 640px - 1023px | 2 colonnes max |
+| Desktop | ≥ 1024px | Layout complet |
+
+### Adaptations
+| Composant | Mobile | Desktop |
+|-----------|--------|---------|
+| `.th-nav` | Menu burger | Inline |
+| `.th-container` | `padding: 0 16px;` | `padding: 0 24px;` |
+| `.th-h1` | `font-size: 1.875rem;` | `font-size: 2.25rem;` |
+
+---
+
+## États interactifs
+
+| État | Transition | Exemple |
+|------|------------|---------|
+| Hover (lien) | `color 200ms ease` | Darkening |
+| Hover (bouton) | `all 200ms ease` | Shadow + scale |
+| Focus | `outline 2px solid accent` | Visible focus ring |
+| Active | `scale(0.98)` | Légère réduction |
+
+---
+
+## Restrictions
+
+### INTERDIT
+- Ajouter des classes non listées ici
+- Modifier les valeurs des tokens
+- Utiliser des styles inline
+- Utiliser des `!important`
+- Importer des fonts externes non déclarées
+- Utiliser des animations CSS non documentées
+
+### OBLIGATOIRE
+- Utiliser les variables CSS (`var(--color-xxx)`)
+- Respecter l'ordre des propriétés dans les déclarations
+- Conserver l'indentation du HTML (2 espaces)
