@@ -1,50 +1,86 @@
-# SSG Engine Rules
+---
+name: ssg-engine
+description: Règles automatiquement chargées pour le fonctionnement du SSG
+alwaysApply: true
+---
 
-## Core Principles
+# Règles SSG Engine
 
-1. **Deterministic Output**: Same input always produces same output
-2. **Component Isolation**: Components are self-contained units
-3. **Cascade Override**: Site > Site-Type > Theme (most specific wins)
-4. **Validation First**: Always validate before building
+## Règle 1 : Contexte obligatoire
+Avant TOUTE opération de build, tu DOIS charger :
+- Le `site.json` du site actif
+- Le `theme.json` du thème utilisé
+- Le `preset.json` du site-type utilisé
+- Le `design-system.md` du thème
+- Le `ux-system.md` du site-type
 
-## Processing Pipeline
+## Règle 2 : Format HTML
+- Doctype : `<!DOCTYPE html>`
+- Lang : attribut `lang` obligatoire sur `<html>`
+- Charset : `<meta charset="UTF-8">` en premier dans `<head>`
+- Viewport : `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+- Indentation : 2 espaces
+- Pas de lignes vides multiples
+- Attributs HTML : guillemets doubles uniquement
 
+## Règle 3 : Classes CSS
+- Format : kebab-case uniquement (`main-header`, pas `mainHeader`)
+- Préfixes :
+  - `th-` : classes du thème
+  - `st-` : classes du site-type
+  - `c-` : classes custom/override
+- JAMAIS de classes sans préfixe (sauf classes utilitaires Tailwind si utilisé)
+
+## Règle 4 : Variables
+- Syntaxe : `{{variable}}` ou `{{object.property}}`
+- Échappement HTML : automatique sauf `{{{raw}}}`
+- Variables non résolues : ERREUR (ne pas laisser `{{xxx}}` dans l'output)
+
+## Règle 5 : Fichiers
+- Encodage : UTF-8 sans BOM
+- Fins de ligne : LF (pas CRLF)
+- Noms de fichiers : kebab-case, pas d'espaces, pas de caractères spéciaux
+- Extensions : `.html` pour les pages, `.md` pour le contenu
+
+## Règle 6 : Structure des URLs
+- Mode : "pretty URLs" par défaut
+- `content/about.md` → `public/about/index.html`
+- `content/blog/mon-article.md` → `public/blog/mon-article/index.html`
+- `content/index.md` → `public/index.html` (exception)
+
+## Règle 7 : Assets
+- Chemin : toujours relatif à la racine (`/assets/css/style.css`)
+- Pas de CDN externe sauf autorisation explicite dans `site.json`
+- Images : attribut `alt` OBLIGATOIRE
+
+## Règle 8 : Manifest
+Après chaque build, mettre à jour `_state/manifest.json` :
+```json
+{
+  "lastBuild": "ISO-8601",
+  "generator": "claude-ssg",
+  "version": "1.0.0",
+  "site": "nom-du-site",
+  "theme": "nom-du-theme",
+  "siteType": "nom-du-type",
+  "files": {
+    "source-path": {
+      "hash": "sha256-du-contenu-source",
+      "output": "chemin-output",
+      "buildTime": "ISO-8601"
+    }
+  }
+}
 ```
-Content (Markdown)
-    → Parser (extract structure)
-    → Assembler (apply components)
-    → Variables (substitute values)
-    → Output (static HTML)
-```
 
-## Override Cascade
+## Règle 9 : Gestion des erreurs
+- Fichier source manquant : ERREUR BLOQUANTE
+- Composant manquant : ERREUR BLOQUANTE
+- Variable non résolue : ERREUR BLOQUANTE
+- Spec incohérente : AVERTISSEMENT + demande de clarification
 
-When resolving a component:
-
-1. Check `sites/{site}/overrides/components/`
-2. Check `site-types/{type}/components/`
-3. Check `themes/{theme}/components/`
-4. Use default if none found
-
-## Variable Resolution
-
-Variables use the `{{variable}}` syntax:
-
-- `{{site.name}}` - Site-level variables
-- `{{theme.color.primary}}` - Theme design tokens
-- `{{content.title}}` - Content frontmatter
-- `{{component.slot}}` - Component slots
-
-## File Processing Rules
-
-1. `.md` files in `content/` are processed as pages
-2. Files starting with `_` are ignored in output
-3. Assets are copied verbatim to `public/`
-4. Component `.html` files are never output directly
-
-## Error Handling
-
-- Missing component: WARN and use fallback
-- Missing variable: ERROR and stop build
-- Invalid structure: ERROR with specific location
-- Circular reference: ERROR and stop build
+## Règle 10 : Communication
+- Toujours confirmer ce qui va être fait AVANT de le faire
+- Lister les fichiers qui seront créés/modifiés
+- Résumer les actions effectuées APRÈS
+- En cas d'erreur : expliquer clairement + proposer une solution
