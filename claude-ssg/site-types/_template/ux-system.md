@@ -1,85 +1,94 @@
-# UX System
+# UX System : [Nom du type de site]
 
-## Overview
+> Version: 1.0.0
+> Ce document définit les RÈGLES UX. Elles sont OBLIGATOIRES.
 
-This document defines the user experience patterns and behaviors for this site type.
+## Objectif du type de site
 
-## Navigation Patterns
+[Décrire l'objectif principal : convertir, informer, vendre, etc.]
 
-### Primary Navigation
-- Position: Top header
-- Behavior: Static
-- Mobile: Hamburger menu
+## Persona cible
 
-### Secondary Navigation
-- Position: Footer
-- Content: Utility links
+[Décrire le visiteur type]
 
-## Page Layouts
+---
 
-### Default Layout
+## Architecture de l'information
+
+### Hiérarchie des pages
 ```
-+------------------+
-|     Header       |
-+------------------+
-|                  |
-|   Main Content   |
-|                  |
-+------------------+
-|     Footer       |
-+------------------+
+[Définir la structure des pages]
 ```
 
-## Interactions
+### Navigation
+- Nombre max d'items : X
+- Ordre des items : [définir]
+- CTA en nav : oui/non
 
-### Links
-- Underline on hover
-- Focus visible outline
+---
 
-### Buttons
-- Hover state: darken
-- Active state: pressed effect
-- Focus: visible outline
+## Règles par composant
 
-### Forms
-- Labels above inputs
-- Inline validation
-- Clear error messages
+### [Composant 1]
 
-## Animations
+#### Objectif
+[Pourquoi ce composant existe]
 
-### Page Transitions
-- None by default
+#### Placement
+[Où il doit être positionné]
 
-### Component Animations
-- Subtle fade for modals
-- Smooth scroll for anchors
+#### Contenu
+- Titre : [contraintes]
+- Texte : [contraintes]
+- CTA : [contraintes]
 
-## Accessibility Requirements
+#### INTERDIT
+- [Liste des anti-patterns]
 
-### Keyboard Navigation
-- All interactive elements focusable
-- Logical tab order
-- Skip links for main content
+---
 
-### Screen Readers
-- Semantic HTML structure
-- ARIA labels where needed
-- Live regions for dynamic content
+## Responsive
 
-### Visual
-- Minimum contrast ratio: 4.5:1
-- Focus indicators visible
-- No motion for reduced-motion preference
+### Mobile
+[Règles spécifiques mobile]
 
-## Responsive Behavior
+### Desktop
+[Règles spécifiques desktop]
 
-### Breakpoints
-- Mobile: < 640px
-- Tablet: 640px - 1024px
-- Desktop: > 1024px
+---
 
-### Mobile Considerations
-- Touch-friendly targets (44x44px min)
-- No hover-dependent functionality
-- Simplified navigation
+## Performance
+
+### Objectifs
+- LCP : < 2.5s
+- FID : < 100ms
+- CLS : < 0.1
+
+### Règles
+- [Liste des règles de performance]
+
+---
+
+## Accessibilité
+
+### Niveau cible
+WCAG 2.1 AA
+
+### Règles
+- [Liste des règles a11y spécifiques]
+
+---
+
+## Checklist avant publication
+
+- [ ] [Item 1]
+- [ ] [Item 2]
+- [ ] [Item 3]
+
+---
+
+## Anti-patterns (INTERDIT)
+
+❌ [Anti-pattern 1]
+❌ [Anti-pattern 2]
+❌ [Anti-pattern 3]

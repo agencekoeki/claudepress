@@ -1,131 +1,34 @@
-# Theme Components
+# Index des composants du thème
 
-## Overview
+Ce dossier contient les templates HTML des composants.
 
-This document lists all components available in this theme.
+## Composants obligatoires
+- `header.html` — Header du site
+- `footer.html` — Footer du site
+- `nav.html` — Navigation principale
+- `nav-item.html` — Item de navigation (utilisé dans nav.html)
+- `page-wrapper.html` — Template de base HTML
 
-## Layout Components
+## Composants de contenu
+- `article.html` — Article/page complète
+- `article-card.html` — Carte d'article (pour listings)
 
-### page-wrapper
-The outermost container for all pages.
+## Composants typographiques
+Ces composants sont utilisés lors du parsing Markdown :
+- `heading.html` — Titres (h1-h6)
+- `paragraph.html` — Paragraphes
+- `link.html` — Liens
+- `button.html` — Boutons
+- `image.html` — Images
+- `list.html` — Listes (ul, ol)
+- `list-item.html` — Item de liste
+- `blockquote.html` — Citations
+- `code-block.html` — Blocs de code
+- `code-inline.html` — Code inline
+- `divider.html` — Séparateurs (hr)
 
-**Props:**
-- `slot`: Page content
-
-### header
-Site header with navigation.
-
-**Props:**
-- `slot`: Navigation items
-
-### footer
-Site footer.
-
-**Props:**
-- `slot`: Footer content
-
-### nav
-Navigation container.
-
-**Props:**
-- `slot`: Navigation items
-
-### nav-item
-Individual navigation link.
-
-**Props:**
-- `href`: Link URL
-- `text`: Link text
-- `active`: Boolean for current page
-
-## Content Components
-
-### article
-Article/post container.
-
-**Props:**
-- `title`: Article title
-- `slot`: Article content
-
-### article-card
-Card preview of an article.
-
-**Props:**
-- `title`: Article title
-- `excerpt`: Short description
-- `href`: Link to full article
-- `date`: Publication date
-
-### heading
-Section headings (h1-h6).
-
-**Props:**
-- `level`: Heading level (1-6)
-- `text`: Heading text
-
-### paragraph
-Text paragraphs.
-
-**Props:**
-- `text`: Paragraph content
-
-### link
-Inline links.
-
-**Props:**
-- `href`: Link URL
-- `text`: Link text
-
-### button
-Clickable buttons.
-
-**Props:**
-- `text`: Button text
-- `href`: Optional link
-- `variant`: primary, secondary, outline
-
-### image
-Images with optional caption.
-
-**Props:**
-- `src`: Image source
-- `alt`: Alt text
-- `caption`: Optional caption
-
-### list
-Ordered or unordered lists.
-
-**Props:**
-- `ordered`: Boolean
-- `items`: Array of items
-
-### list-item
-Individual list item.
-
-**Props:**
-- `text`: Item content
-
-### blockquote
-Quoted text.
-
-**Props:**
-- `text`: Quote content
-- `cite`: Optional citation
-
-### code-block
-Multi-line code.
-
-**Props:**
-- `code`: Code content
-- `language`: Programming language
-
-### code-inline
-Inline code.
-
-**Props:**
-- `code`: Code content
-
-### divider
-Horizontal rule/separator.
-
-No props.
+## Règles
+1. Chaque composant utilise UNIQUEMENT les classes `th-*`
+2. Chaque composant est autonome (pas de dépendance cachée)
+3. Les variables `{{...}}` sont documentées dans le fichier
+4. Les composants sont versionnés avec le thème
