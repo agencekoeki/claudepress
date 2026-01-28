@@ -1,0 +1,57 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      site_name:
+        description: 'Site to deploy'
+        required: true
+        default: 'mon-site'
+
+env:
+  # Nom du site à déployer (modifier selon votre configuration)
+  SITE_NAME: ${{ github.event.inputs.site_name || 'mon-site' }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout du repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Vérifier que le dossier public existe
+      - name: Check public folder exists
+        run: |
+          if [ ! -d "claude-ssg/sites/${{ env.SITE_NAME }}/public" ]; then
+            echo "Error: public folder not found for site ${{ env.SITE_NAME }}"
+            exit 1
+          fi
+
+          if [ -z "$(ls -A claude-ssg/sites/${{ env.SITE_NAME }}/public)" ]; then
+            echo "Error: public folder is empty for site ${{ env.SITE_NAME }}"
+            exit 1
+          fi
+
+          echo "Found $(find claude-ssg/sites/${{ env.SITE_NAME }}/public -type f | wc -l) files to deploy"
+
+      # 3. Deploy via FTP
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          local-dir: ./claude-ssg/sites/${{ env.SITE_NAME }}/public/
+          server-dir: ${{ secrets.FTP_REMOTE_PATH || '/public_html/' }}
+          dangerous-clean-slate: false  # true = supprime les fichiers distants non présents en local
+
+      # 4. Notification de succès
+      - name: Deployment successful
+        run: |
+          echo "✅ Site '${{ env.SITE_NAME }}' deployed successfully!"
+          echo "Files deployed from: claude-ssg/sites/${{ env.SITE_NAME }}/public/"
