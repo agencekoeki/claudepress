@@ -1,10 +1,29 @@
 {
-  "name": "_template",
-  "theme": "",
-  "siteType": "",
-  "url": "",
-  "language": "en",
-  "description": "",
-  "author": "",
-  "created": ""
+  "name": "Mon Site",
+  "url": "https://example.com",
+  "description": "Description du site",
+  "lang": "fr",
+  "author": "Nom",
+
+  "theme": "_template",
+  "siteType": "_template",
+
+  "navigation": [
+    {"label": "Accueil", "url": "/"},
+    {"label": "À propos", "url": "/about"}
+  ],
+
+  "social": {
+    "twitter": "",
+    "linkedin": "",
+    "github": ""
+  },
+
+  "build": {
+    "prettyUrls": true,
+    "trailingSlash": true,
+    "minify": false
+  },
+
+  "overrides": {}
 }
